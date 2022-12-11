@@ -1,15 +1,21 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "../store/index.js";
 
+const store = useStore();
+ 
 const router = useRouter();
+
 const username = ref("");
 const password = ref("");
 const error = ref(false);
 
 const login = () => {
-  if (username.value === "Jimmy" && password.value === "section33") {
+  if (username.value === "tmdb" && password.value === "movies") {
     router.push("./account");
+    store.logged = true;
+    console.log(store.logged)
   } else {
     error.value = true;
   }
@@ -20,9 +26,9 @@ const login = () => {
   <div class="login-container">
     <h1>Home</h1>
     <form @submit.prevent="login()">
-      <input type="text" placeholder="Username" v-model="username" />
-      <input type="password" placeholder="Password" v-model="password" />
-      <input type="submit" value="Login" />
+      <input type="text" class="userLog" placeholder="Username" v-model="username" />
+      <input type="password" class="userLog" placeholder="Password" v-model="password" />
+      <input type="submit" id="submitbutton" value="Login" />
     </form>
     <div v-if="error">
       <p>Incorrect Username/Password!</p>
@@ -39,6 +45,20 @@ const login = () => {
   width: 100vw;
   height: 100vh;
   font-size: 3rem;
+
+  background-color:bisque;
+}
+
+.userLog {
+  width:60vw;
+  height:30px;
+  margin-top:10px;
+}
+
+#submitbutton {
+  margin-top:10px;
+  left:auto;
+  right:auto;
 }
 
 form {
