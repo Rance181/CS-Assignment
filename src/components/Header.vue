@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useRouter } from "vue-router";
 
@@ -37,7 +38,7 @@ const moveCart = () => {
   display: grid;
   grid-template-columns: 2fr 6fr 2fr 2fr;
   width:100vw;
-  height:50px;
+  height:10%;
 
   margin-top:0;
   padding-top:0;
