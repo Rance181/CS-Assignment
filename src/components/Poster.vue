@@ -16,7 +16,7 @@ console.log(movies);
   <div class="poster-container" >
     <div v-for=" movie in movies" :key="movie.id" class="movies">
         <p>
-            #{{ movie.id }}: {{ movie.title }}
+          {{ movie.title }}
         </p>
           <img v-if="movie.poster" :src="'https://image.tmdb.org/t/p/w500' + movie.poster" class="image"/>
     </div>
@@ -30,6 +30,8 @@ console.log(movies);
   display: grid;
   width:100vw;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  background-color:blanchedalmond;
 }
 
 .movies{

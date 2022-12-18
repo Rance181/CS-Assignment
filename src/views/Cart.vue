@@ -10,17 +10,7 @@
 
 <style scoped>
 .cart-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  font-size: 3rem;
+  background-color:blanchedalmond;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-}
 </style>

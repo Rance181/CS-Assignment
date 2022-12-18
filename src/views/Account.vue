@@ -8,11 +8,12 @@ import Header from "../components/Header.vue"
 <template>
     <div class="account-container">
     <Suspense>
-    <Header v-bind:loggedornot="false" />
+        <Header v-bind:loggedornot="false" />
     </Suspense>
     <br/><br/><br/>
+    
     <Suspense>
-    <Poster/>
+        <Poster/>
     </Suspense>
     </div>
 </template>
