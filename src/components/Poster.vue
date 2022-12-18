@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import axios from "axios";
+import { ref } from "vue";
 import { useStore } from "../store/index.js";
 
 const store = useStore();
@@ -9,17 +10,30 @@ await store.getMovies();
 const movies = store.movies;
 console.log(movies);
 
+const showModal = ref(false);
+const selectedId = ref(0);
 
+const openModal = (movievalue) => {
+  showModal.value = true;
+  selectedId.value = movievalue;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+};
 </script>
 
 <template>
   <div class="poster-container" >
     <div v-for=" movie in movies" :key="movie.id" class="movies">
+    <div class="movie" @click="openModal(movie)">
         <p>
           {{ movie.title }}
         </p>
-          <img v-if="movie.poster" :src="'https://image.tmdb.org/t/p/w500' + movie.poster" class="image"/>
+          <img v-if="movie.poster" :src="'https://image.tmdb.org/t/p/w500' + movie.poster" class="image">
     </div>
+    <Modal v-if="showModal" @toggleModal="closeModal()" :id="selectedId" />
+  </div>
   </div>
 </template>
 
@@ -44,7 +58,7 @@ console.log(movies);
 
     font-family:'Courier New', Courier, monospace;
 }
-.movies>img{
+.movie>img{
     border-radius: 20px;
     width:16vw;
     height:auto;

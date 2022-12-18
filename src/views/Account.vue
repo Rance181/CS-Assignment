@@ -11,7 +11,7 @@ import Header from "../components/Header.vue"
         <Header v-bind:loggedornot="false" />
     </Suspense>
     <br/><br/><br/>
-    
+
     <Suspense>
         <Poster/>
     </Suspense>
