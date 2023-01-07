@@ -20,6 +20,9 @@ export const useStore = defineStore('store', {
         return {
           id: movie.id,
           title: movie.title,
+          original_title: movie.original_title,
+          release_date: movie.release_date,
+          overview: movie.overview,
           poster: movie.poster_path,
         }
       });
@@ -30,3 +33,22 @@ export const useStore = defineStore('store', {
     }
   }
 });
+
+export const useCart = defineStore('cart',{
+  state: () => {
+    return {
+      purchase:[],
+      size:0, 
+    }
+  },
+  actions:{
+    addToCart(movie){
+      this.purchase[this.size]=movie;
+      this.size=this.size+1;
+    },
+
+    getItem(index){
+      return this.purchase[index];
+    }
+  }
+})

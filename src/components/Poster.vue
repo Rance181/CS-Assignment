@@ -3,12 +3,12 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useStore } from "../store/index.js";
+import Modal from "../components/Modal.vue";
 
 const store = useStore();
 await store.getMovies();
 
 const movies = store.movies;
-console.log(movies);
 
 const showModal = ref(false);
 const selectedId = ref(0);
