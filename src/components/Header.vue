@@ -37,7 +37,7 @@ const props = defineProps({
     <button id="login" @click="moveHome" v-if="!loggedornot">Home</button>
 </div>
 <div class="grid-item">
-    <button id="cart" @click="moveCart">Cart</button>
+    <button id="cart" @click="moveCart" v-if="!loggedornot">Cart</button>
 </div>
 </div>
 </template>

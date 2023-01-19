@@ -2,24 +2,26 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "../store/index.js";
+import { auth } from '../firebase/index.js'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { logged } from '../store/index.js'
 
 const store = useStore();
- 
 const router = useRouter();
 
-const username = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const error = ref(false);
 
 const login = () => {
-  if (username.value === "tmdb" && password.value === "movies") {
-    router.push("./account");
-    store.logged = true;
-    console.log(store.logged)
-  } else {
-    error.value = true;
-  }
+  try {
+        signInWithEmailAndPassword(auth, email.value, password.value).then(() => {
+          logged = true;
+          router.push('/account')
+        });
+    } catch (e) {
+        error = true;
+    }
 };
 </script>
 
@@ -27,7 +29,7 @@ const login = () => {
   <div class="login-container">
     <h1>Home</h1>
     <form @submit.prevent="login()">
-      <input type="text" class="userLog" placeholder="Username" v-model="username" />
+      <input type="text" class="userLog" placeholder="Useremail" v-model="useremail" />
       <input type="password" class="userLog" placeholder="Password" v-model="password" />
       <input type="submit" id="submitbutton" value="Login" />
     </form>

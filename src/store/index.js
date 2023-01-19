@@ -5,7 +5,6 @@ export const useStore = defineStore('store', {
   state: () => {
     return {
       movies: [],
-      logged: true,
     }
   },
   actions: {
@@ -33,6 +32,8 @@ export const useStore = defineStore('store', {
     }
   }
 });
+
+export const logged = ref(false);
 
 export const useCart = defineStore('cart',{
   state: () => {
