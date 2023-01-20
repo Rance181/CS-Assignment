@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
+import { ref } from "vue";
 
 export const useStore = defineStore('store', {
   state: () => {
     return {
       movies: [],
+      logged:[]
     }
   },
   actions: {
@@ -26,14 +28,13 @@ export const useStore = defineStore('store', {
         }
       });
     },
-
     toLog(){
       this.logged = false;
     }
   }
 });
 
-export const logged = ref(false);
+export const loge = ref(false);
 
 export const useCart = defineStore('cart',{
   state: () => {

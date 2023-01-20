@@ -16,10 +16,13 @@ const moveHome = () => {
   router.push("./account")
 }
 
+const moveRegister = () => {
+  router.push("./register")
+}
+
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
-  loggedornot : Boolean,
-
+  lon : Boolean,
 });
 
 </script>
@@ -33,11 +36,12 @@ const props = defineProps({
     <p/>
 </div>
 <div class="grid-item">
-    <button id="login" @click="moveLogin" v-if="loggedornot">Login</button>
-    <button id="login" @click="moveHome" v-if="!loggedornot">Home</button>
+    <button id="login" @click="moveLogin" v-if="!lon" >Login</button>
+    <button id="home" @click="moveHome" v-if="lon" >Home</button>
 </div>
 <div class="grid-item">
-    <button id="cart" @click="moveCart" v-if="!loggedornot">Cart</button>
+  <button id="register" @click="moveRegister" v-if="!lon">Register</button>
+  <button id="cart" @click="moveCart" v-if="lon">Cart</button>
 </div>
 </div>
 </template>

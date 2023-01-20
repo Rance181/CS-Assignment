@@ -2,21 +2,21 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { auth } from '../firebase/index.js'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { logged } from '../store/index.js'
+import { auth } from '../firebase/index.js';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { loge } from '../store/index.js';
 
 const store = useStore();
 const router = useRouter();
 
-const email = ref('');
+const useremail = ref('');
 const password = ref('');
 const error = ref(false);
 
 const login = () => {
   try {
         signInWithEmailAndPassword(auth, email.value, password.value).then(() => {
-          logged = true;
+          loge.value = true;
           router.push('/account')
         });
     } catch (e) {

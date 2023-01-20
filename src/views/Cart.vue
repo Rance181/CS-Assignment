@@ -12,7 +12,7 @@
 
 <template>
   <div class="cart-container">
-    <Header class="header" v-bind:loggedornot="false" /><br/><br/><br/><br/>
+    <Header class="header" v-bind:lon="true" /><br/><br/><br/><br/>
     <div class="itemsbought">
       <div v-for=" item in items" :key="item.id" class="items">
         <div class="item">

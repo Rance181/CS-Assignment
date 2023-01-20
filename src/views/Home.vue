@@ -8,7 +8,7 @@ import Footer from "../components/Footer.vue";
 
 <template>
   <div class="home-container">
-  <Header v-bind:loggedornot="true" />
+  <Header v-bind:lon="false" />
   <Hero/>
   <Footer/>
   </div>
