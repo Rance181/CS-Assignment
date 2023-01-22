@@ -6,10 +6,8 @@ import { useStore } from "../store/index.js";
 import Modal from "../components/Modal.vue";
 
 const store = useStore();
-
-const movies = store.movies;
 const genre = ref(28);
-
+const qu = ref("");
 const showModal = ref(false);
 const selectedId = ref(0);
 
@@ -25,11 +23,18 @@ const closeModal = () => {
 
 const getGenres = async () => {
   await store.getMovies(genre.value);
-  console.log(movies)
+  console.log(store.movies)
+}
+
+const getSearch = async () => {
+  await store.searchMovies(qu.value);
+  console.log(store.movies)
 }
 </script>
 
 <template>
+  <input type="text" id="query" v-model="qu"/><button @click="getSearch()">Search</button>
+
   <select v-model="genre" @change="getGenres()">
       <option value="28">Action</option>
       <option value="12">Family</option>
@@ -38,8 +43,8 @@ const getGenres = async () => {
       <option value="80">Fantasy</option>
     </select>
   <div class="poster-container">
-    <div v-for=" movie in movies" :key="movie.id" class="movies">
-      <div class="movie" @click="openModal(movie)">
+    <div v-for=" movie in store.movies" :key="movie.id" class="movies">
+      <div class="movie" @click="openModal(movie.id)">
         <p>
           {{ movie.title }}
         </p>

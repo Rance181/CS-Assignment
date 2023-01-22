@@ -1,25 +1,25 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
   import { createApp } from "vue";
-  import { useCart } from "../store/index.js"
+  import { useStore } from "../store/index.js"
   import Header from "../components/Header.vue"
 
-  const cart = useCart();
-  const items = cart.purchase;
+  const store = useStore();
 
-  console.log(items)
 </script>
 
 <template>
   <div class="cart-container">
     <Header class="header" v-bind:lon="true" /><br/><br/><br/><br/>
     <div class="itemsbought">
-      <div v-for=" item in items" :key="item.id" class="items">
+      <div v-for="item in Array.from(store.cart.values())" class="items">
         <div class="item">
             <p>
               {{ item.title }}
             </p>
               <img v-if="item.poster" :src="'https://image.tmdb.org/t/p/w500' + item.poster" class="image">
+              <br/>
+          <button @click="store.removeFromCart(item.id)" id="removebutton">Remove</button>
         </div>
       </div>
     </div>
@@ -30,6 +30,7 @@
 body {
   background-color:blanchedalmond;
 }
+
 
 .cart-container {
   padding:0;
@@ -63,6 +64,7 @@ body {
     margin:20px;
     color:white;
     width:20vw;
+    height:440px;
 
     font-family:'Courier New', Courier, monospace;
 }
@@ -70,5 +72,16 @@ body {
     border-radius: 20px;
     width:16vw;
     height:auto;
+}
+
+.item > button{
+  margin-left:auto;
+  margin-right:auto;
+  position:absolute;
+
+  color:white;
+  background-color:black;
+  border:none;
+
 }
 </style>

@@ -5,7 +5,6 @@ import { useStore } from "../store/index.js";
 import { auth } from "../firebase/index.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const username = ref("");
 const email = ref("");
 const password1 = ref("");
 const password2 = ref("");

@@ -1,34 +1,47 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { useCart } from "../store/index.js";
+import axios from "axios";
+import { useStore } from "../store/index.js";
+
+const store = useStore();
 const props = defineProps(["id"]);
 const emits = defineEmits(["toggleModal"]);
 
-const cart = useCart();
-
-console.log(props);
-
+let data = (
+  await axios.get(`https://api.themoviedb.org/3/movie/${props.id}`, {
+    params: {
+      api_key: "64688a2ee40628130c4073aff0308684",
+    },
+  })
+).data;
 </script>
 
 <template>
   <Teleport to="body">
-    <div class="modal-outer-container" @click.self="emits('toggleModal')" custom>
-        <div class="modal-inner-container">
-          <button class="close-button" @click="emits('toggleModal')">X</button>
-          <div class="wrapper">
+    <div class="modal-outer-container" @click.self="emits('toggleModal')">
+      <div class="modal-inner-container">
+        <button class="close-button" @click="emits('toggleModal')">X</button>
+        <div class="wrapper">
             <div class="img">
-              <img :src="'https://image.tmdb.org/t/p/w500' + props.id.poster" class="image"/>
+              <img :src="'https://image.tmdb.org/t/p/w500' + data.poster_path" class="image"/>
             </div>
             <div class="introduction">
-              <h1>{{ props.id.title }}</h1>
-              Original Title - {{ props.id.original_title }} <br /><br/>
-              Release Date: {{ props.id.release_date }} <br /><br/>
-              Overview: {{ props.id.overview }}<br /><br/>
-              <button class="cart" id="btn_sub" @click="cart.addToCart(props.id)">Add To Cart</button>
+              <h1>{{ data.title }}</h1>
+              Original Title - {{ data.original_title }} <br /><br/>
+              Release Date: {{ data.release_date }} <br /><br/>
+              Overview: {{ data.overview }}<br /><br/>
+              <button @click="store.addToCart(props.id, {
+              id: data.id,
+              poster: data.poster_path,
+              title: data.title,
+              date: data.release_date,
+            })">
+            Purchase
+          </button>
             </div>
           </div>
-        </div>
       </div>
+    </div>
   </Teleport>
 </template>
 
@@ -65,16 +78,16 @@ console.log(props);
 }
 
 .wrapper {
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-.wrapper > .img > img{
-  height:400px;
-  width:auto;
+.wrapper>.img>img {
+  height: 400px;
+  width: auto;
 }
 
-.wrapper > .introduction {
-  color:white;
+.wrapper>.introduction {
+  color: white;
 }
 </style>
