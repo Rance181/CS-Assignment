@@ -1,6 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useRouter } from "vue-router";
+import { auth } from "../firebase/index.js";
+import { 
+  signOut 
+} from 'firebase/auth'
 
 const router = useRouter();
 
@@ -20,6 +24,11 @@ const moveRegister = () => {
   router.push("./register")
 }
 
+const logout = async () => {
+  await signOut(auth)
+  router.push('/login')
+}
+
 // eslint-disable-next-line no-unused-vars
 const props = defineProps({
   lon : Boolean,
@@ -33,7 +42,8 @@ const props = defineProps({
     <p id="logo">TMDB</p>
 </div>
 <div class="grid-item">
-    <p/>
+    <p v-if="!lon"/>
+    <button id="logout" @click="logout" v-if="lon" >Log Out</button>
 </div>
 <div class="grid-item">
     <button id="login" @click="moveLogin" v-if="!lon" >Login</button>
@@ -64,6 +74,10 @@ const props = defineProps({
   padding-top:0;
 
   top:5px;
+}
+
+#logout {
+  width:80px;
 }
 
 #logo {

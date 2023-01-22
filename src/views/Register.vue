@@ -19,7 +19,7 @@ const registerUser = async () => {
     return;
   } else {
     await createUserWithEmailAndPassword(auth, email.value, password1.value);
-    router.push("./login")
+    router.push("./account")
   }
 
 
@@ -31,11 +31,10 @@ const registerUser = async () => {
   <div class="register-container">
     <h1>Register</h1>
     <form @submit.prevent="registerUser()">
-      <input v-model="username" type="text" placeholder="username" /> <br />
-      <input v-model="email" type="email" placeholder="email" /> <br />
-      <input v-model="password1" type="password" placeholder="password" /> <br />
-      <input v-model="password2" type="password" placeholder="re-enter password" /> <br />
-      <input type="submit" value="Register" />
+      <input v-model="email" type="email" placeholder="email" class="userLog" /> <br />
+      <input v-model="password1" type="password" placeholder="password" class="userLog" /> <br />
+      <input v-model="password2" type="password" placeholder="re-enter password" class="userLog" /> <br />
+      <input type="submit" id="submitbutton" value="Register" />
     </form>
   </div>
 </template>

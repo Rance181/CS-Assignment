@@ -6,14 +6,16 @@ export const useStore = defineStore('store', {
   state: () => {
     return {
       movies: [],
-      logged:[]
+      logged:[],
+      cart: new Map(),
     }
   },
   actions: {
-    async getMovies() {
-      let data = (await axios.get("https://api.themoviedb.org/3/trending/movie/week", {
+    async getMovies(id) {
+      let data = (await axios.get("https://api.themoviedb.org/3/discover/movie", {
         params: {
           api_key: "ad891932e4907c23fc8a99002a4b5d3f",
+          with_genres: id,
         }
       })).data.results;
       
@@ -28,9 +30,10 @@ export const useStore = defineStore('store', {
         }
       });
     },
-    toLog(){
-      this.logged = false;
-    }
+    addToCart(id, data) {
+      this.cart.set(id, data);
+      console.log(this.cart);
+   }
   }
 });
 

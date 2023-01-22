@@ -2,37 +2,48 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "../store/index.js";
 import { auth } from '../firebase/index.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { loge } from '../store/index.js';
 
+
 const store = useStore();
 const router = useRouter();
 
-const useremail = ref('');
+const email = ref('');
 const password = ref('');
 const error = ref(false);
 
-const login = () => {
+const login = async () => {
   try {
-        signInWithEmailAndPassword(auth, email.value, password.value).then(() => {
-          loge.value = true;
-          router.push('/account')
-        });
-    } catch (e) {
-        error = true;
-    }
+        await signInWithEmailAndPassword(auth, email.value, password.value)
+        router.push("./account")
+      } catch (error) {
+        switch(error.code) {
+          case 'auth/user-not-found':
+            alert("User not found")
+            break
+          case 'auth/wrong-password':
+            alert("Wrong password")
+            break
+          default:
+            alert("Something went wrong")
+        }
+        return
+      }
 };
 </script>
 
 <template>
   <div class="login-container">
-    <h1>Home</h1>
+    <h1>Login</h1>
     <form @submit.prevent="login()">
-      <input type="text" class="userLog" placeholder="Useremail" v-model="useremail" />
+      <input type="text" class="userLog" placeholder="Useremail" v-model="email" />
       <input type="password" class="userLog" placeholder="Password" v-model="password" />
       <input type="submit" id="submitbutton" value="Login" />
     </form>
+
     <div v-if="error">
       <p>Incorrect Username/Password!</p>
     </div>
