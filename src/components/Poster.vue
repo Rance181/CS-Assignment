@@ -3,9 +3,13 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useStore } from "../store/index.js";
+import { totalPages } from "../store/index.js";
 import Modal from "../components/Modal.vue";
 
 const store = useStore();
+var totalpgs = ref(5) ;
+var pagenumber = ref(1);
+
 const genre = ref(28);
 const qu = ref("");
 const showModal = ref(false);
@@ -26,16 +30,25 @@ const getGenres = async () => {
   console.log(store.movies)
 }
 
-const getSearch = async () => {
-  await store.searchMovies(qu.value);
+const getSearch = async (p) => {
+  await store.searchMovies(qu.value, p);
   console.log(store.movies)
+  console.log(totalpgs.value, pagenumber.value)
+}
+
+const changingpage = (direction) => {
+  pagenumber.value += direction;
+
+  getSearch(pagenumber.value)
 }
 </script>
 
 <template>
-  <input type="text" id="query" v-model="qu"/><button @click="getSearch()">Search</button>
+  <input type="text" id="query" v-model="qu"/><button @click="getSearch(1)">Search</button>
+  <button v-show="pagenumber > 1" @click="changingpage(-1)">Prev</button>
+  <button v-show="pagenumber < totalpgs" @click="changingpage(1)">Next</button>
 
-  <select v-model="genre" @change="getGenres()">
+  <select id="selector" v-model="genre" @change="getGenres()">
       <option value="28">Action</option>
       <option value="12">Family</option>
       <option value="16">Science Fiction</option>
@@ -81,5 +94,9 @@ const getSearch = async () => {
   border-radius: 20px;
   width: 16vw;
   height: auto;
+}
+
+#selector {
+  float:right;
 }
 </style>

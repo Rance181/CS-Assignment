@@ -4,8 +4,18 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "../store/index.js";
 import { auth } from '../firebase/index.js';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { loge } from '../store/index.js';
+import { createUserWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup, 
+} from "firebase/auth";
+
+
+const registerUserByGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const user = await signInWithPopup(auth, provider);
+  router.push("./account")
+  console.log(user);
+};
 
 
 const store = useStore();
@@ -38,6 +48,7 @@ const login = async () => {
 <template>
   <div class="login-container">
     <h1>Login</h1>
+    <button id="registergoogle" @click="registerUserByGoogle">login By Google</button>
     <form @submit.prevent="login()">
       <input type="text" class="userLog" placeholder="Useremail" v-model="email" />
       <input type="password" class="userLog" placeholder="Password" v-model="password" />
@@ -73,6 +84,17 @@ const login = async () => {
   margin-top:10px;
   left:auto;
   right:auto;
+}
+
+#registergoogle{
+  margin-top:10px;
+  left:auto;
+  right:auto;
+
+  width:60vw;
+  height:30px;
+
+  border-color:black;
 }
 
 form {

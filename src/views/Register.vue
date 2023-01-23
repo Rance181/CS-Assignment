@@ -3,7 +3,10 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "../store/index.js";
 import { auth } from "../firebase/index.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup, 
+} from "firebase/auth";
 
 const email = ref("");
 const password1 = ref("");
@@ -20,15 +23,21 @@ const registerUser = async () => {
     await createUserWithEmailAndPassword(auth, email.value, password1.value);
     router.push("./account")
   }
-
-
 };
 
+const registerUserByGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const user = await signInWithPopup(auth, provider);
+  router.push("./account")
+  console.log(user);
+};
 </script>
 
 <template>
   <div class="register-container">
     <h1>Register</h1>
+    <button id="registergoogle" @click="registerUserByGoogle">Register By Google</button>
+
     <form @submit.prevent="registerUser()">
       <input v-model="email" type="email" placeholder="email" class="userLog" /> <br />
       <input v-model="password1" type="password" placeholder="password" class="userLog" /> <br />
@@ -57,6 +66,17 @@ const registerUser = async () => {
   margin-top:10px;
 }
 
+#registergoogle{
+  margin-top:10px;
+  left:auto;
+  right:auto;
+
+  width:60vw;
+  height:30px;
+
+  border-color:black;
+
+}
 #submitbutton {
   margin-top:10px;
   left:auto;
